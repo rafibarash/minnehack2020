@@ -5,6 +5,7 @@ import Container from "../components/Container";
 import MyCard from "../components/MyCard";
 import { useEvents } from "../hooks/event";
 import { API_PATH } from "../api";
+import { useUser } from "../hooks/user";
 
 const subscribeToEvent = async (eventID, setEvents) => {
   const userToken = await AsyncStorage.getItem("userToken");
@@ -50,6 +51,7 @@ const unsubscribeFromEvent = async (eventID, setEvents) => {
 
 const FindScreen = () => {
   const { events } = useEvents();
+  const { user, setUser, isSubscriber } = useUser();
 
   return (
     <Container>
@@ -61,6 +63,7 @@ const FindScreen = () => {
               item={item}
               onSubscribe={subscribeToEvent}
               onUnsubscribe={unsubscribeFromEvent}
+              isSubscribed={isSubscriber("events", item._id)}
             />
           )}
           keyExtractor={item => item.name}
