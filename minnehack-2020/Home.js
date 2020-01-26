@@ -2,13 +2,16 @@ import React, { useState } from 'react';
 import { StyleSheet, Text, View, Button, } from 'react-native';
 
 
+
+
 export default function Home() {
+    const [points, setPoints] = useState(0);
     return (
-        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-          <Text>Home Screen</Text>
+        <View>
+          <Text>You clicked {points} times</Text>
           <Button
-            title="Go to Details"
-            onPress={() => this.props.navigation.navigate('Details')}
+            title="Home" 
+            onPress={() => setPoints(points + 1)}
           />
         </View>
       );
