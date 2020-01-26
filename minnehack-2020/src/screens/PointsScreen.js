@@ -3,16 +3,20 @@ import { View, StyleSheet } from "react-native";
 import { Text, Divider } from "react-native-elements";
 import Container from "../components/Container";
 import { usePoints } from "../hooks/points";
-import AnimateNumber from 'react-native-countup'
 
 
 const PointsScreen = () => {
   const points = usePoints();
-  const curTime = 0;
+  const [currTime, setCurrTime] = useState(0);
   const curPoints = 0;
 
-
-
+/*
+  const intervalId = BackgroundTimer.setInterval(() => {
+    // this will be executed every 200 ms
+    // even when app is the the background
+    setCurrTime(currTime+1);
+  }, 1000);
+  */
 
   return (
     <Container>
@@ -30,7 +34,7 @@ const PointsScreen = () => {
           <View style={styles.sGridChild}>
             <Text h4 style={styles.sGridText}>Time</Text>
             <Text h5 style={styles.sGridText}>
-              <AnimateNumber value={10000} interval={15} countBy={1}/>
+              0:00
             </Text>
           </View>
           <View style={styles.sGridChild}>
