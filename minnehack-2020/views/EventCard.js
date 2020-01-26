@@ -1,8 +1,18 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { StyleSheet, Text, View, Image} from 'react-native';
-import { Card, ListItem, Icon, Button } from 'react-native-elements';
-import Icons from 'react-native-vector-icons/AntDesign';
+import { Card, ListItem, Button } from 'react-native-elements';
+import Icon from 'react-native-vector-icons/AntDesign';
 
+function Favorite() {
+return (
+<Icon name="heart" size={30} color="#900" />
+);
+} 
+function Favo() {
+    return (
+    <Icon name="hearto" size={30} color="#900" />
+    );
+    } 
 const users = [
     {
        name: 'brynn',
@@ -11,6 +21,7 @@ const users = [
    ]
 
 export default function EventCard() {
+    const [favorited, setFavorited] = useState(false);
     return (
         <Card
         title='Hot SIngles near u'
@@ -22,9 +33,17 @@ export default function EventCard() {
         buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 0}}
         title='View'
         />
-        {/* <Button/> */}
-        <Icons.Button name="Heart"/>
-        {/* <HeartIcon/>> */}
+        <Button 
+            icon={
+                <Icon 
+                name={favorited ? "heart" : "hearto"}
+                color="red"
+                size={24}
+                />
+            }
+            onPress={() => setFavorited(!favorited)}
+            type="clear"
+        />
         </Card>
     );
 }
