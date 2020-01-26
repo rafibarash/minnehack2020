@@ -8,6 +8,7 @@
     "eject": "expo eject"
   },
   "dependencies": {
+    "@emotion/core": "^10.0.27",
     "@react-native-community/masked-view": "^0.1.6",
     "expo": "~36.0.0",
     "react": "~16.9.0",
@@ -21,7 +22,8 @@
     "react-native-web": "~0.11.7",
     "react-navigation": "^4.0.10",
     "react-navigation-stack": "^2.0.16",
-    "react-navigation-tabs": "^2.7.0"
+    "react-navigation-tabs": "^2.7.0",
+    "react-spinners": "^0.8.0"
   },
   "devDependencies": {
     "@babel/core": "^7.0.0",

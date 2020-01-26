@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import { Text, View } from 'react-native';
 import { createAppContainer } from 'react-navigation';
 import { createBottomTabNavigator } from 'react-navigation-tabs';
-import Home from './Home';
+import { ClipLoader } from "react-spinners";
+import Home from './views/Home';
 
 
 class HomeScreen extends React.Component {
