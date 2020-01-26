@@ -9,7 +9,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     marginTop: 100,
-    marginHorizontal: 25,
+    marginHorizontal: 20,
   },
 });
 

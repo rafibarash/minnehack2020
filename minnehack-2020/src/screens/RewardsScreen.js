@@ -3,12 +3,13 @@ import { View, StyleSheet, FlatList } from "react-native";
 import { Text } from "react-native-elements";
 import MyCard from "../components/MyCard";
 import { useUserRewards } from "../hooks/user";
+import Container from "../components/Container";
 
 const RewardsScreen = () => {
   return (
-    <View style={styles.container}>
+    <Container>
       <UserRewards />
-    </View>
+    </Container>
   );
 };
 
@@ -19,7 +20,7 @@ const UserRewards = () => {
   });
   return (
     <View>
-      <Text h2> Rewards</Text>
+      <Text h2>Your Rewards</Text>
       <FlatList
         renderItem={({ item }) => <MyCard item={item} />}
         keyExtractor={item => item.name}
@@ -30,12 +31,6 @@ const UserRewards = () => {
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    marginTop: 100,
-    marginHorizontal: 25,
-  },
-});
+const styles = StyleSheet.create({});
 
 export default RewardsScreen;

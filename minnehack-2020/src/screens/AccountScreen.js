@@ -12,7 +12,7 @@ const AccountScreen = ({ navigation }) => {
   return (
     <View style={styles.root}>
       <Text h2 style={styles.header}>
-        My Account
+        Personal Account
       </Text>
       <View style={styles.actions}>
         <ListItem title="Sign out" onPress={signOut} topDivider bottomDivider />

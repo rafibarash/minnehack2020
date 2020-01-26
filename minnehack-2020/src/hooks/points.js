@@ -29,11 +29,11 @@ export const usePoints = () => {
     getPoints();
   }, []);
 
-  useEffect(() => {
-    setInterval(() => {
-      setPoints(prevPoints => prevPoints + 1);
-    }, 1000);
-  }, [isInLocation]);
+  // useEffect(() => {
+  //   setInterval(() => {
+  //     setPoints(prevPoints => prevPoints + 1);
+  //   }, 1000);
+  // }, [isInLocation]);
 
   return points;
 };
