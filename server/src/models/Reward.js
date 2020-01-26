@@ -23,6 +23,6 @@ const RewardSchema = new mongoose.Schema({
   },
 });
 
-const Reward = mongoose.model('Reward', RewardSchema);
+const Reward = mongoose.model('reward', RewardSchema);
 
 export default Reward;

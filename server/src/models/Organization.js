@@ -19,13 +19,13 @@ const OrganizationSchema = new mongoose.Schema({
   },
   admin: {
     type: Schema.Types.ObjectId,
-    ref: 'User'
+    ref: 'user',
   },
   members: [
     {
       user: {
         type: Schema.Types.ObjectId,
-        ref: 'User',
+        ref: 'user',
       },
     },
   ],
@@ -33,7 +33,7 @@ const OrganizationSchema = new mongoose.Schema({
     {
       event: {
         type: Schema.Types.ObjectId,
-        ref: 'Event',
+        ref: 'event',
       },
     },
   ],
