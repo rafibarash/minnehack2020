@@ -6,13 +6,17 @@ import AuthLoadingScreen from "./src/screens/AuthLoadingScreen";
 import SigninScreen from "./src/screens/SigninScreen";
 import SignupScreen from "./src/screens/SignupScreen";
 import HomeScreen from "./src/screens/HomeScreen";
-
+import FeedScreen from "./src/screens/FeedScreen";
+import RewardScreen from "./src/screens/RewardsScreen";
+import FindScreen from "./src/screens/FindScreen.js"
 import AccountScreen from "./src/screens/AccountScreen";
 import GetPointsScreen from "./src/screens/GetPointsScreen";
 
 const AppStack = createBottomTabNavigator({
   Home: HomeScreen,
-  GetPoints: GetPointsScreen,
+  Earn: GetPointsScreen,
+  Feed: FeedScreen,
+  Rewards: RewardScreen,
   Account: AccountScreen
 });
 

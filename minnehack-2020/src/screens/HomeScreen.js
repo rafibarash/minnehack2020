@@ -7,9 +7,6 @@ const HomeScreen = ({ navigation }) => {
     navigation.navigate("AccountScreen");
   };
 
-  _getPoints = () => {
-    navigation.navigate("GetPointsScreen");
-  };
 
   _signOutAsync = async () => {
     await AsyncStorage.clear();
@@ -20,7 +17,6 @@ const HomeScreen = ({ navigation }) => {
     <View>
       <Button title="Show me more of the app" onPress={this._showAccount} />
       <Button title="Actually, sign me out :)" onPress={this._signOutAsync} />
-      <Button title="Get Points" onPress={this._getPoints}></Button>
     </View>
   );
 };

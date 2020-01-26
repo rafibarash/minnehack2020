@@ -5,7 +5,7 @@ import { Context as AuthContext } from "../context/AuthContext";
 const FeedScreen = () => {
   return (
     <View style={styles.root}>
-      <Text>Feed</Text>
+      <Text>Rewards</Text>
     </View>
   );
 };
