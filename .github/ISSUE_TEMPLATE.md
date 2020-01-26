@@ -1,15 +1,9 @@
 ## User Story Description
 
-As a <user rule/persona>
-
-I want <what?>
-
-So that <why?>
+I want <what>
 
 ## Acceptance Criteria
 
-1.
-2.
-3.
+1. 2. 3.
 
 ## Effort
