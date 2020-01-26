@@ -3,8 +3,6 @@ import { Text, View, StyleSheet } from "react-native";
 import { Context as AuthContext } from "../context/AuthContext";
 
 const AccountScreen = () => {
-  const { signout } = useContext(AuthContext);
-
   return (
     <View style={styles.root}>
       <Text>My account</Text>
