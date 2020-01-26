@@ -55,8 +55,6 @@ router.post(
      }
      const { name, hostingOrg, startTime,  endTime, tags } = req.body;
     try {
-
-      
       let user = await User.findById(req.user.id).select('-password');
       const hostingAdmin = user.id;
       let orgAdmin = await Organization.findById(hostingOrg).select('admin');
@@ -64,30 +62,25 @@ router.post(
         type: 'Point', 
         coordinates: [32, 42]
       };
+      console.log(name, hostingOrg, startTime, endTime, tags, location);
       console.log(orgAdmin.admin);
       console.log(hostingAdmin);
+      const event = new Event ({
+        name,
+        hostingOrg,
+        hostingAdmin,
+        startTime,
+        endTime,
+        location,
+        tags
+      });
       if (hostingAdmin != orgAdmin.admin){
         return badRequestError(res, 'You are not an admin of this organization.');
       } else {
-        event = new Event ({
-          name,
-          hostingOrg,
-          hostingAdmin,
-          startTime,
-          endTime,
-          location,
-          tags
-        });
+        console.log(event);
         await event.save();
         return res.json(event);
-
       }
-
-      
-
-
-
-
 
     } catch (err) {
       console.error(err.message);
