@@ -54,7 +54,7 @@ const FindScreen = () => {
   return (
     <Container>
       <View>
-        <Text h2>Volunteer Events Near You</Text>
+        <Text h2>Nearby Volunteer Opportunities</Text>
         <FlatList
           renderItem={({ item }) => (
             <MyCard

@@ -21,7 +21,7 @@ const FeedScreen = () => {
 const UserEvents = () => {
   const userEvents = useUserEvents();
   return (
-    <View style={{ paddingBottom: 30 }}>
+    <View style={{ paddingBottom: 25 }}>
       <Text h2>Your Events</Text>
       <FlatList
         renderItem={({ item }) => <MyCard item={item} />}

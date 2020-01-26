@@ -18,7 +18,7 @@ const router = express.Router();
 router.get('/', async (req, res) => {
   try {
     const rewards = await Reward.find();
-    return res.json(rewards);
+    return res.json({ rewards });
   } catch (err) {
     console.error(err.message);
     return internalError(res);
