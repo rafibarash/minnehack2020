@@ -14,30 +14,34 @@ const UserSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  numPoints:{
+  numPoints: {
     type: Number,
-    default: 0
+    default: 0,
   },
   rewards: [
     {
       reward: {
         type: Schema.Types.ObjectId,
-        ref: 'Reward'
-      }
-    }
+        ref: 'Reward',
+      },
+    },
   ],
-
   events: [
     {
       event: {
         type: Schema.Types.ObjectId,
-        ref: 'Event'
-      }
-    }
-  ]
-
-  
-
+        ref: 'Event',
+      },
+    },
+  ],
+  organizations: [
+    {
+      event: {
+        type: Schema.Types.ObjectId,
+        ref: 'Organization',
+      },
+    },
+  ],
 });
 
 const User = mongoose.model('User', UserSchema);
