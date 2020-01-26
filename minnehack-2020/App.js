@@ -1,21 +1,53 @@
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import * as React from 'react';
+import { Button, View, Text } from 'react-native';
+import { createAppContainer } from 'react-navigation';
+import { createStackNavigator } from 'react-navigation-stack';
 import Points from './Points';
 
 
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <Points></Points>
-    </View>
-  );
+class HomeScreen extends React.Component {
+  render() {
+    return (
+      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+        <Text>Home Screen</Text>
+        <Button
+          title="Go to Details"
+          onPress={() => this.props.navigation.navigate('Details')}
+        />
+      </View>
+    );
+  }
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+class DetailsScreen extends React.Component {
+  render() {
+    return (
+      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+        <Text>Details Screen</Text>
+        <Button
+          title="Go to Home"
+          onPress={() => this.props.navigation.navigate('Home')}
+        />
+        <Points></Points>
+      </View>
+    );
+  }
+}
+
+const RootStack = createStackNavigator(
+  {
+    Home: HomeScreen,
+    Details: DetailsScreen,
   },
-});
+  {
+    initialRouteName: 'Home',
+  }
+);
+
+const AppContainer = createAppContainer(RootStack);
+
+export default class App extends React.Component {
+  render() {
+    return <AppContainer />;
+  }
+}
