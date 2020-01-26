@@ -7,7 +7,7 @@ const EventSchema = new mongoose.Schema({
   },
   hostingOrg: {
     type: Schema.Types.ObjectId,
-    ref: 'Organization',
+    ref: 'organization',
   },
   time: {
     startTime: Date,

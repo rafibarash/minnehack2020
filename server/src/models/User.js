@@ -22,7 +22,7 @@ const UserSchema = new mongoose.Schema({
     {
       reward: {
         type: Schema.Types.ObjectId,
-        ref: 'Reward',
+        ref: 'reward',
       },
     },
   ],
@@ -30,7 +30,7 @@ const UserSchema = new mongoose.Schema({
     {
       event: {
         type: Schema.Types.ObjectId,
-        ref: 'Event',
+        ref: 'event',
       },
     },
   ],
@@ -38,12 +38,12 @@ const UserSchema = new mongoose.Schema({
     {
       event: {
         type: Schema.Types.ObjectId,
-        ref: 'Organization',
+        ref: 'organization',
       },
     },
   ],
 });
 
-const User = mongoose.model('User', UserSchema);
+const User = mongoose.model('user', UserSchema);
 
 export default User;

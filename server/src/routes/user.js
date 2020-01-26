@@ -277,6 +277,10 @@ router.delete('/event/:eventID', authMiddleware, async (req, res) => {
 router.get('/reward', authMiddleware, async (req, res) => {
   try {
     const user = await User.findById(req.user.id);
+    // const user = await User.findById(req.user.id).populate({
+    //   path: 'rewards',
+    //   select: 'barcode sponsor',
+    // });
     return res.json({ rewards: user.rewards });
   } catch (err) {
     console.error(err.message);
