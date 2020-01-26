@@ -74,6 +74,22 @@ router.post(
 );
 
 /**
+ * @route  DELETE user
+ * @desc   Deletes user
+ * @access Private
+ */
+router.delete('/', authMiddleware, async (req, res) => {
+  try {
+    const { id: userID } = req.user;
+    await User.findOneAndRemove({ _id: userID });
+    return res.json({ msg: 'User deleted' });
+  } catch (err) {
+    console.error(err.message);
+    return internalError(res);
+  }
+});
+
+/**
  * @route  PUT /user/organization
  * @desc   Subscribe to an organization
  * @access Private
