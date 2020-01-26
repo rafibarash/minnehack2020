@@ -11,6 +11,7 @@ import {
 import User from '../models/User';
 import Organization from '../models/Organization';
 import Event from '../models/Event';
+import Reward from '../models/Reward';
 
 const router = express.Router();
 
@@ -83,6 +84,21 @@ router.delete('/', authMiddleware, async (req, res) => {
     const { id: userID } = req.user;
     await User.findOneAndRemove({ _id: userID });
     return res.json({ msg: 'User deleted' });
+  } catch (err) {
+    console.error(err.message);
+    return internalError(res);
+  }
+});
+
+/**
+ * @route  GET /user/organization
+ * @desc   Get all user's events
+ * @access Private
+ */
+router.get('/organization', authMiddleware, async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id);
+    return res.json({ organizations: user.organizations });
   } catch (err) {
     console.error(err.message);
     return internalError(res);
@@ -168,6 +184,21 @@ router.delete('/organization/:orgID', authMiddleware, async (req, res) => {
 });
 
 /**
+ * @route  GET /user/event
+ * @desc   Get all user's events
+ * @access Private
+ */
+router.get('/event', authMiddleware, async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id);
+    return res.json({ events: user.event });
+  } catch (err) {
+    console.error(err.message);
+    return internalError(res);
+  }
+});
+
+/**
  * @route  PUT /user/event
  * @desc   Subscribe to an event
  * @access Private
@@ -226,6 +257,137 @@ router.delete('/event/:eventID', authMiddleware, async (req, res) => {
     );
 
     // Save user obj
+    await user.save();
+
+    return res.json(user);
+  } catch (err) {
+    console.error(err.message);
+    if (err.kind === 'ObjectId') {
+      return badRequestError(res, 'Organization not found.');
+    }
+    return internalError(res);
+  }
+});
+
+/**
+ * @route  GET /user/reward
+ * @desc   Get all user's rewards
+ * @access Private
+ */
+router.get('/reward', authMiddleware, async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id);
+    return res.json({ rewards: user.rewards });
+  } catch (err) {
+    console.error(err.message);
+    return internalError(res);
+  }
+});
+
+/**
+ * @route  POST /user/reward
+ * @desc   Buys a reward with points
+ * @access Private
+ */
+router.post(
+  '/reward',
+  authMiddleware,
+  [
+    check('rewardID', 'Reward ID is required')
+      .not()
+      .isEmpty(),
+  ],
+  async (req, res) => {
+    // Error check
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return validationError(res);
+    }
+    const { rewardID } = req.body;
+    try {
+      // Get reward and user
+      const reward = await Reward.findById(rewardID);
+      const user = await User.findById(req.user.id).select('-password');
+
+      // Check that user has enough points to buy reward
+      if (user.numPoints < reward.cost) {
+        return badRequestError(
+          res,
+          'User does not have enough points to buy this reward.'
+        );
+      }
+
+      // Update user object
+      user.rewards.push(reward);
+      user.numPoints -= reward.cost;
+
+      // Save user obj
+      await user.save();
+
+      return res.json(user);
+    } catch (err) {
+      console.error(err.message);
+      if (err.kind === 'ObjectId') {
+        return badRequestError(res, 'Event not found.');
+      }
+      return internalError(res);
+    }
+  }
+);
+
+/**
+ * @route  POST /user/points/
+ * @desc   Add points to user
+ * @access Private
+ */
+router.post(
+  '/points',
+  authMiddleware,
+  [check('pointsAwarded', 'PointsAwarded is required.').exists()],
+  async (req, res) => {
+    // Error check
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return validationError(res);
+    }
+    const { pointsAwarded } = req.body;
+    try {
+      // Get user
+      const user = await User.findById(req.user.id).select('-password');
+
+      // Add points
+      user.numPoints += pointsAwarded;
+
+      // Save user
+      await user.save();
+
+      return res.json(user);
+    } catch (err) {
+      console.error(err.message);
+      if (err.kind === 'ObjectId') {
+        return badRequestError(res, 'Organization not found.');
+      }
+      return internalError(res);
+    }
+  }
+);
+
+/**
+ * @route  DELETE /user/reward/:rewardID
+ * @desc   Use a reward
+ * @access Private
+ */
+router.delete('/reward/:rewardID', authMiddleware, async (req, res) => {
+  try {
+    // Get user
+    const user = await User.findById(req.user.id).select('-password');
+
+    // Remove reward ref from user
+    user.rewards = user.rewards.filter(
+      reward => reward._id.toString() !== req.params.rewardID
+    );
+
+    // Save user
     await user.save();
 
     return res.json(user);
