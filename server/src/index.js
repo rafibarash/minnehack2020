@@ -2,6 +2,7 @@ import express from 'express';
 import connectDB from './utils/db';
 
 // routes
+import userRouter from './routes/users';
 
 // Init App
 const app = express();
@@ -16,7 +17,7 @@ app.use(express.json({ extended: false }));
 
 // Routes
 app.get('/', (req, res) => res.send('API running'));
-// app.use('/api/users', userRouter)
+app.use('/users', userRouter);
 
 app.listen(PORT, () =>
   console.log(`Server started on http://localhost:${PORT}...`)
