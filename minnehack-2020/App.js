@@ -5,18 +5,30 @@ import { createBottomTabNavigator } from "react-navigation-tabs";
 import AuthLoadingScreen from "./src/screens/AuthLoadingScreen";
 import SigninScreen from "./src/screens/SigninScreen";
 import SignupScreen from "./src/screens/SignupScreen";
-import PointsScreen from "./src/screens/GetPointsScreen";
+import PointsScreen from "./src/screens/PointsScreen";
 import FeedScreen from "./src/screens/FeedScreen";
 import ExploreScreen from "./src/screens/ExploreScreen";
 import RewardScreen from "./src/screens/RewardsScreen";
 import AccountScreen from "./src/screens/AccountScreen";
+import Icon from 'react-native-ionicons';
+
 
 const AppStack = createBottomTabNavigator({
-  Home: PointsScreen,
-  Feed: FeedScreen,
-  Explore: ExploreScreen,
-  Rewards: RewardScreen,
-  Account: AccountScreen,
+  Home: {screen: PointsScreen, tabBarIcon: ({ tintColor }) => (
+    <Icon name='ios-home' size={30} color={tintColor}/>
+  )},
+  Feed: {screen: FeedScreen , tabBarIcon: ({ tintColor }) => (
+    <Icon name='ios-home' size={30} color={tintColor}/>
+  )},
+  Explore: {screen: ExploreScreen, tabBarIcon: ({ tintColor }) => (
+    <Icon name='ios-home' size={30} color={tintColor}/>
+  )},
+  Rewards: {screen: RewardScreen, tabBarIcon: ({ tintColor }) => (
+    <Icon name='ios-home' size={30} color={tintColor}/>
+  )},
+  Account: {screen: AccountScreen, tabBarIcon: ({ tintColor }) => (
+    <Icon name='ios-home' size={30} color={tintColor}/>
+  )},
 });
 
 const AuthStack = createStackNavigator({

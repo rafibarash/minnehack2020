@@ -13,7 +13,7 @@ export const useEvents = () => {
           },
         });
         if (!res.ok) {
-          throw Error("Response to get a users events has bad error code.");
+          throw Error("Response to get all events has bad error code.");
         }
         const json = await res.json();
         setEvents(json.events);
@@ -24,5 +24,5 @@ export const useEvents = () => {
     getEvents();
   }, []);
 
-  return events;
+  return { events, setEvents };
 };

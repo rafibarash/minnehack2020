@@ -348,6 +348,22 @@ router.post(
 );
 
 /**
+ * @route  GET /user/points
+ * @desc   Get all user's points
+ * @access Private
+ */
+router.get('/points', authMiddleware, async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id);
+    const points = user.numPoints;
+    return res.json({ points });
+  } catch (err) {
+    console.error(err.message);
+    return internalError(res);
+  }
+});
+
+/**
  * @route  POST /user/points/
  * @desc   Add points to user
  * @access Private

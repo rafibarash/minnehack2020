@@ -7,21 +7,22 @@ import {
   useUserOrganizations,
   useUserRewards,
 } from "../hooks/user";
+import Container from "../components/Container";
 
 const FeedScreen = () => {
   return (
-    <View style={styles.container}>
+    <Container>
       <UserEvents />
       <UserOrganizations />
-    </View>
+    </Container>
   );
 };
 
 const UserEvents = () => {
   const userEvents = useUserEvents();
   return (
-    <View>
-      <Text h2>My Events</Text>
+    <View style={{ paddingBottom: 30 }}>
+      <Text h2>Your Events</Text>
       <FlatList
         renderItem={({ item }) => <MyCard item={item} />}
         keyExtractor={item => item.name}
@@ -36,7 +37,7 @@ const UserOrganizations = () => {
   const userOrgs = useUserOrganizations();
   return (
     <View>
-      <Text h2>My Organizations</Text>
+      <Text h2>Your Organizations</Text>
       <FlatList
         renderItem={({ item }) => <MyCard item={item} />}
         keyExtractor={item => item.name}
@@ -47,12 +48,6 @@ const UserOrganizations = () => {
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    marginTop: 100,
-    marginHorizontal: 25,
-  },
-});
+const styles = StyleSheet.create({});
 
 export default FeedScreen;
