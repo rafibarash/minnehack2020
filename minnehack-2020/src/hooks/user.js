@@ -2,6 +2,43 @@ import { useState, useEffect } from "react";
 import { AsyncStorage } from "react-native";
 import { API_PATH } from "../api";
 
+export const useUser = () => {
+  const [user, setUser] = useState(null);
+
+  const isSubscriber = (field, id) => {
+    if (!user) return false;
+    for (let obj of user[field]) {
+      if (obj._id == id) return true;
+    }
+    return false;
+  };
+
+  useEffect(() => {
+    const getUser = async () => {
+      const userToken = await AsyncStorage.getItem("userToken");
+      try {
+        const res = await fetch(`${API_PATH}/auth`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            "x-auth-token": userToken,
+          },
+        });
+        if (!res.ok) {
+          throw Error("Response to get a users events has bad error code.");
+        }
+        const user = await res.json();
+        setUser(user);
+      } catch (err) {
+        console.log(err.message);
+      }
+    };
+    getUser();
+  });
+
+  return { user, setUser, isSubscriber };
+};
+
 export const useUserEvents = () => {
   const [userEvents, setUserEvents] = useState([]);
   useEffect(() => {
@@ -27,7 +64,7 @@ export const useUserEvents = () => {
     getUserEvents();
   }, []);
 
-  return userEvents;
+  return { userEvents, setUserEvents };
 };
 
 export const useUserOrganizations = () => {

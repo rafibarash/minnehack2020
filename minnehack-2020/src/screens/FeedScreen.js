@@ -19,7 +19,7 @@ const FeedScreen = () => {
 };
 
 const UserEvents = () => {
-  const userEvents = useUserEvents();
+  const { userEvents, setUserEvents } = useUserEvents();
   return (
     <View style={{ paddingBottom: 25 }}>
       <Text h2>Your Events</Text>
