@@ -1,11 +1,32 @@
 import React from "react";
-import { Text, View, StyleSheet } from "react-native";
+import {
+  StyleSheet,
+  Button,
+  View,
+  SafeAreaView,
+  Text,
+  Alert,
+} from "react-native";
+import AwesomeButton from "react-native-really-awesome-button";
 
+function Separator() {
+  return <View style={styles.separator} />;
+}
 const GetPointsScreen = () => {
   return (
-    <View style={styles.root}>
-      <Text>Getting Points</Text>
-    </View>
+    <SafeAreaView style={styles.container}>
+      <View>
+        <AwesomeButton
+          progress
+          onPress={next => {
+            /** Do Something **/
+            next();
+          }}
+        >
+          Begin Volunteering Tracking
+        </AwesomeButton>
+      </View>
+    </SafeAreaView>
   );
 };
 
