@@ -2,7 +2,7 @@ import express from 'express';
 import connectDB from './utils/db';
 
 // routes
-import userRouter from './routes/users';
+import userRouter from './routes/user';
 import authRouter from './routes/auth';
 
 // Init App
@@ -18,7 +18,7 @@ app.use(express.json({ extended: false }));
 
 // Routes
 app.get('/', (req, res) => res.send('API running'));
-app.use('/users', userRouter);
+app.use('/user', userRouter);
 app.use('/auth', authRouter);
 
 app.listen(PORT, () =>

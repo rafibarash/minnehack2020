@@ -18,14 +18,13 @@ const router = express.Router();
  * @access Public
  */
 router.get('/', authMiddleware, async (req, res) => {
-  return res.send('Implement me!');
-  // try {
-  //   const user = await User.findById(req.user.id).select('-password');
-  //   return res.json(user);
-  // } catch (err) {
-  //   console.error(err.message);
-  //   return internalError(res);
-  // }
+  try {
+    const user = await User.findById(req.user.id).select('-password');
+    return res.json(user);
+  } catch (err) {
+    console.error(err.message);
+    return internalError(res);
+  }
 });
 
 /**
@@ -44,27 +43,26 @@ router.post(
     if (!errors.isEmpty()) {
       return validationError(res, errors);
     }
-    return res.send('Implement me!');
-    // const { email, password } = req.body;
-    // try {
-    //   // check if user exists
-    //   const user = await User.findOne({ email });
-    //   if (!user) {
-    //     return badRequestError(res, 'User does not exist.');
-    //   }
+    const { email, password } = req.body;
+    try {
+      // check if user exists
+      const user = await User.findOne({ email });
+      if (!user) {
+        return badRequestError(res, 'User does not exist.');
+      }
 
-    //   // check if hashed password matches user's password
-    //   const isMatch = await bcrypt.compare(password, user.password);
-    //   if (!isMatch) {
-    //     return badRequestError(res, "User's password is not correct.");
-    //   }
+      // check if hashed password matches user's password
+      const isMatch = await bcrypt.compare(password, user.password);
+      if (!isMatch) {
+        return badRequestError(res, "User's password is not correct.");
+      }
 
-    //   // return JWT
-    //   return returnJWT(res, user.id);
-    // } catch (err) {
-    //   console.error(err.message);
-    //   return internalError(res);
-    // }
+      // return JWT
+      return returnJWT(res, user.id);
+    } catch (err) {
+      console.error(err.message);
+      return internalError(res);
+    }
   }
 );
 
