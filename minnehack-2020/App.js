@@ -5,7 +5,7 @@ import { createBottomTabNavigator } from "react-navigation-tabs";
 import AuthLoadingScreen from "./src/screens/AuthLoadingScreen";
 import SigninScreen from "./src/screens/SigninScreen";
 import SignupScreen from "./src/screens/SignupScreen";
-import PointsScreen from "./src/screens/GetPointsScreen";
+import PointsScreen from "./src/screens/PointsScreen";
 import FeedScreen from "./src/screens/FeedScreen";
 import ExploreScreen from "./src/screens/ExploreScreen";
 import RewardScreen from "./src/screens/RewardsScreen";
