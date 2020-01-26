@@ -10,8 +10,9 @@ const RewardSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  sponsorImg: {
+  image: {
     type: String,
+    required: true,
   },
   description: {
     type: String,

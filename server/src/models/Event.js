@@ -5,21 +5,25 @@ const EventSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  image: {
+    type: String,
+    required: true,
+  },
   hostingOrg: {
     type: Schema.Types.ObjectId,
     ref: 'organization',
   },
   hostingAdmin: {
-      type: Schema.Types.ObjectId,
-      ref: 'User'
+    type: Schema.Types.ObjectId,
+    ref: 'user',
   },
   startTime: {
     type: Date,
-    required: true
+    required: true,
   },
   endTime: {
-      type: Date,
-      required: true
+    type: Date,
+    required: true,
   },
   location: {
     type: { type: String, default: 'Point' },

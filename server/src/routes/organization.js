@@ -21,25 +21,23 @@ router.get('/', async (req, res) => {
   try {
     Organization.find({}, function(err, organizations) {
       return res.json(organizations);
-    })
-    
+    });
   } catch (err) {
     console.error(err.message);
     return internalError(res);
   }
 });
 
-router.get('/:id', async(req, res) => {
-  try{
-    Organization.findById(req.params.id , (err, organization)=> {
+router.get('/:id', async (req, res) => {
+  try {
+    Organization.findById(req.params.id, (err, organization) => {
       return res.json(organization);
-    })
+    });
   } catch (err) {
     console.error(err.message);
     return internalError(res);
   }
-})
-
+});
 
 /**
  * @route  Post /organization
@@ -52,32 +50,35 @@ router.post(
   [
     check('email', 'Please include a valid email.').isEmail(),
     check('phone', 'Phone number required.').not(),
-    check('name', 'Name required.').not()
+    check('name', 'Name required.').not(),
   ],
   async (req, res) => {
-     const errors = validationResult(req);
-     if (!errors.isEmpty()) {
-       return validationError(res, errors);
-     }
-     const { email, name, phone } = req.body;
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return validationError(res, errors);
+    }
+    const { email, name, phone } = req.body;
     try {
       let org = await Organization.findOne({ phone });
 
       if (org) {
         // organization already exists
-        return badRequestError(res, 'Organization already exsits.')
+        return badRequestError(res, 'Organization already exists.');
       }
       let user = await User.findById(req.user.id).select('-password');
       const admin = user.id;
 
-
-      org = new Organization ({
+      org = new Organization({
         name,
         email,
         admin,
-        phone
+        phone,
       });
+      user.organizations.push(org);
+      org.members.push(user);
       await org.save();
+      await user.save();
+
       return res.json(org);
     } catch (err) {
       console.error(err.message);
@@ -94,22 +95,20 @@ router.post(
 
 router.delete('/:id', authMiddleware, async (req, res) => {
   try {
-    
-    Organization.findById(req.params.id , (err, organization)=> {
-      if (organization.admin == req.user.id){
-        Organization.findOneAndRemove({_id: req.params.id});
-        return res.json({msg: 'Organization deleted.'});
+    Organization.findById(req.params.id, (err, organization) => {
+      if (organization.admin == req.user.id) {
+        Organization.findOneAndRemove({ _id: req.params.id });
+        return res.json({ msg: 'Organization deleted.' });
       } else {
-        return res.json({msg: 'Could not delete organization. You are not authorized.'});
+        return res.json({
+          msg: 'Could not delete organization. You are not authorized.',
+        });
       }
     });
-      
   } catch (err) {
     console.error(err.message);
     return internalError(res);
   }
 });
-
-
 
 export default router;

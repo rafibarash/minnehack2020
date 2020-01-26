@@ -21,73 +21,67 @@ router.get('/', async (req, res) => {
   try {
     Event.find({}, function(err, events) {
       return res.json(events);
-    })
-    
+    });
   } catch (err) {
     console.error(err.message);
     return internalError(res);
   }
 });
 
-router.get('/:id', async(req, res) => {
-  try{
-    Event.findById(req.params.id , (err, event)=> {
+router.get('/:id', async (req, res) => {
+  try {
+    Event.findById(req.params.id, (err, event) => {
       return res.json(event);
-    })
+    });
   } catch (err) {
     console.error(err.message);
     return internalError(res);
   }
-})
+});
 
 /**
  * @route  Post /event
  * @desc   Create an event
  * @access Public
  */
-router.post(
-  '/',
-  authMiddleware,
-  async (req, res) => {
-     const errors = validationResult(req);
-     if (!errors.isEmpty()) {
-       return validationError(res, errors);
-     }
-     const { name, hostingOrg, startTime,  endTime, tags } = req.body;
-    try {
-      let user = await User.findById(req.user.id).select('-password');
-      const hostingAdmin = user.id;
-      let orgAdmin = await Organization.findById(hostingOrg).select('admin');
-      const location = {
-        type: 'Point', 
-        coordinates: [32, 42]
-      };
-      console.log(name, hostingOrg, startTime, endTime, tags, location);
-      console.log(orgAdmin.admin);
-      console.log(hostingAdmin);
-      const event = new Event ({
-        name,
-        hostingOrg,
-        hostingAdmin,
-        startTime,
-        endTime,
-        location,
-        tags
-      });
-      if (hostingAdmin != orgAdmin.admin){
-        return badRequestError(res, 'You are not an admin of this organization.');
-      } else {
-        console.log(event);
-        await event.save();
-        return res.json(event);
-      }
-
-    } catch (err) {
-      console.error(err.message);
-      return internalError(res);
-    }
+router.post('/', authMiddleware, async (req, res) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return validationError(res, errors);
   }
-);
+  const { name, hostingOrg, startTime, endTime, tags } = req.body;
+  try {
+    let user = await User.findById(req.user.id).select('-password');
+    let org = await Organization.findById(hostingOrg);
+
+    const location = {
+      type: 'Point',
+      coordinates: [32, 42],
+    };
+
+    const event = new Event({
+      name,
+      hostingOrg: org._id,
+      hostingAdmin: user._id,
+      startTime,
+      endTime,
+      location,
+      tags,
+    });
+    if (user.id != org.admin) {
+      return badRequestError(res, 'You are not an admin of this organization.');
+    } else {
+      user.events.push(event);
+      await event.save();
+      await user.save();
+
+      return res.json(event);
+    }
+  } catch (err) {
+    console.error(err.message);
+    return internalError(res);
+  }
+});
 
 /**
  * @route  DELETE /event
@@ -97,16 +91,16 @@ router.post(
 
 router.delete('/:id', authMiddleware, async (req, res) => {
   try {
-    
-    Event.findById(req.params.id , (err, event)=> {
-      if (event.hostingAdmin == req.user.id){
-        Event.findOneAndRemove({_id: req.params.id});
-        return res.json({msg: 'Event deleted.'});
+    Event.findById(req.params.id, (err, event) => {
+      if (event.hostingAdmin == req.user.id) {
+        Event.findOneAndRemove({ _id: req.params.id });
+        return res.json({ msg: 'Event deleted.' });
       } else {
-        return res.json({msg: 'Could not delete event. You are not authorized.'});
+        return res.json({
+          msg: 'Could not delete event. You are not authorized.',
+        });
       }
     });
-      
   } catch (err) {
     console.error(err.message);
     return internalError(res);
