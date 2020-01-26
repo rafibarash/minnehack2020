@@ -3,7 +3,6 @@ import connectDB from './utils/db';
 
 // routes
 import userRouter from './routes/users';
-import profileRouter from './routes/profile';
 import authRouter from './routes/auth';
 
 // Init App
