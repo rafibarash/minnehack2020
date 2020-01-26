@@ -19,4 +19,10 @@ const connectDB = async () => {
   }
 };
 
+var userSchema = Schema({
+  name: String,
+  
+
+});
+
 module.exports = connectDB;
