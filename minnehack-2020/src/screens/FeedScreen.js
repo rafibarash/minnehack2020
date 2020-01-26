@@ -1,8 +1,12 @@
-import React, { useState, useEffect } from "react";
-import { View, StyleSheet, AsyncStorage, FlatList } from "react-native";
+import React from "react";
+import { View, StyleSheet, FlatList } from "react-native";
 import { Text, Card, Button, Icon } from "react-native-elements";
-import { API_PATH } from "../api";
-import { useUserEvents, useUserOrganizations } from "../hooks/user";
+import MyCard from "../components/MyCard";
+import {
+  useUserEvents,
+  useUserOrganizations,
+  useUserRewards,
+} from "../hooks/user";
 
 const FeedScreen = () => {
   return (
@@ -17,7 +21,7 @@ const UserEvents = () => {
   const userEvents = useUserEvents();
   return (
     <View>
-      <Text h1>My Events</Text>
+      <Text h2>My Events</Text>
       <FlatList
         renderItem={({ item }) => <MyCard item={item} />}
         keyExtractor={item => item.name}
@@ -32,7 +36,7 @@ const UserOrganizations = () => {
   const userOrgs = useUserOrganizations();
   return (
     <View>
-      <Text h1>My Organizations</Text>
+      <Text h2>My Organizations</Text>
       <FlatList
         renderItem={({ item }) => <MyCard item={item} />}
         keyExtractor={item => item.name}
@@ -40,28 +44,6 @@ const UserOrganizations = () => {
         horizontal
       />
     </View>
-  );
-};
-
-const MyCard = ({ item }) => {
-  return (
-    <Card
-      title={item.name}
-      // image={item.image}
-      // image={require('../images/pic2.jpg')}>
-    >
-      <Text style={{ marginBottom: 10 }}>{item.name}</Text>
-      <Button
-        icon={<Icon name="code" color="#ffffff" />}
-        buttonStyle={{
-          borderRadius: 0,
-          marginLeft: 0,
-          marginRight: 0,
-          marginBottom: 0,
-        }}
-        title="VIEW NOW"
-      />
-    </Card>
   );
 };
 

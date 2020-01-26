@@ -20,7 +20,7 @@ const router = express.Router();
 router.get('/', async (req, res) => {
   try {
     Event.find({}, function(err, events) {
-      return res.json(events);
+      return res.json({ events });
     });
   } catch (err) {
     console.error(err.message);

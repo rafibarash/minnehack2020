@@ -1,14 +1,41 @@
 import React from "react";
-import { Text, View, StyleSheet } from "react-native";
+import { View, StyleSheet, FlatList } from "react-native";
+import { Text } from "react-native-elements";
+import MyCard from "../components/MyCard";
+import { useUserRewards } from "../hooks/user";
 
-const FeedScreen = () => {
+const RewardsScreen = () => {
   return (
-    <View style={styles.root}>
-      <Text>Rewards</Text>
+    <View style={styles.container}>
+      <UserRewards />
     </View>
   );
 };
 
-const styles = StyleSheet.create({});
+const UserRewards = () => {
+  let userRewards = useUserRewards();
+  userRewards = userRewards.map(reward => {
+    return { ...reward, name: reward.sponsor };
+  });
+  return (
+    <View>
+      <Text h2> Rewards</Text>
+      <FlatList
+        renderItem={({ item }) => <MyCard item={item} />}
+        keyExtractor={item => item.name}
+        data={userRewards}
+        horizontal
+      />
+    </View>
+  );
+};
 
-export default FeedScreen;
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    marginTop: 100,
+    marginHorizontal: 25,
+  },
+});
+
+export default RewardsScreen;
