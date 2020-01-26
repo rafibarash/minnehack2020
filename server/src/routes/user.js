@@ -98,7 +98,11 @@ router.delete('/', authMiddleware, async (req, res) => {
 router.get('/organization', authMiddleware, async (req, res) => {
   try {
     const user = await User.findById(req.user.id);
-    return res.json({ organizations: user.organizations });
+    const orgs = [];
+    for (let org of user.organizations) {
+      orgs.push(await Organization.findById(org._id));
+    }
+    return res.json({ organizations: orgs });
   } catch (err) {
     console.error(err.message);
     return internalError(res);
@@ -191,7 +195,11 @@ router.delete('/organization/:orgID', authMiddleware, async (req, res) => {
 router.get('/event', authMiddleware, async (req, res) => {
   try {
     const user = await User.findById(req.user.id);
-    return res.json({ events: user.event });
+    const events = [];
+    for (let event of user.events) {
+      events.push(await Event.findById(event._id));
+    }
+    return res.json({ events });
   } catch (err) {
     console.error(err.message);
     return internalError(res);
@@ -226,7 +234,7 @@ router.put(
 
       // Add event ref to user
       user.events.push(event);
-      
+
       // Save user obj
       await user.save();
 
@@ -277,11 +285,11 @@ router.delete('/event/:eventID', authMiddleware, async (req, res) => {
 router.get('/reward', authMiddleware, async (req, res) => {
   try {
     const user = await User.findById(req.user.id);
-    // const user = await User.findById(req.user.id).populate({
-    //   path: 'rewards',
-    //   select: 'barcode sponsor',
-    // });
-    return res.json({ rewards: user.rewards });
+    const rewards = [];
+    for (let reward of user.rewards) {
+      rewards.push(await Reward.findById(reward._id));
+    }
+    return res.json({ rewards });
   } catch (err) {
     console.error(err.message);
     return internalError(res);
