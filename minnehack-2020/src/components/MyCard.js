@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
   },
 });
 
-const MyCard = ({ item, onSubscribe, onUnsubscribe, isSubscribed }) => {
+const MyCard = ({ item, onSubscribe, onUnsubscribe, isSubscribed, btnmsg }) => {
   let name;
   item.name.length > 19
     ? (name = item.name.slice(0, 16) + "...")
@@ -53,7 +53,7 @@ const MyCard = ({ item, onSubscribe, onUnsubscribe, isSubscribed }) => {
                 style={{ paddingRight: 8 }}
               />
             }
-            title="Joined"
+            title={(btnmsg && btnmsg[0]) || "Joined"}
             onPress={() => onUnsubscribe(item._id)}
           />
         ) : (
@@ -66,7 +66,7 @@ const MyCard = ({ item, onSubscribe, onUnsubscribe, isSubscribed }) => {
                 style={{ paddingRight: 8 }}
               />
             }
-            title="Not joined"
+            title={(btnmsg && btnmsg[1]) || "Not joined"}
             onPress={() => onSubscribe(item._id)}
           />
         )}

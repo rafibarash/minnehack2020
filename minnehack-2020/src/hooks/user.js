@@ -13,6 +13,69 @@ export const useUser = () => {
     return false;
   };
 
+  const subscribeToEvent = async (eventID, setEvents) => {
+    const userToken = await AsyncStorage.getItem("userToken");
+    try {
+      const res = await fetch(`${API_PATH}/user/event`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "x-auth-token": userToken,
+        },
+        body: JSON.stringify({ eventID }),
+      });
+      if (!res.ok) {
+        throw Error("Trouble subscribing to event");
+      }
+      const json = await res.json();
+      setEvents(json.events);
+    } catch (err) {
+      console.log(err.message);
+    }
+  };
+
+  const unsubscribeFromEvent = async (eventID, setEvents) => {
+    const userToken = await AsyncStorage.getItem("userToken");
+    try {
+      const res = await fetch(`${API_PATH}/user/event`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "x-auth-token": userToken,
+        },
+        body: JSON.stringify({ eventID }),
+      });
+      if (!res.ok) {
+        throw Error("Trouble unsubscribing from event");
+      }
+      const json = await res.json();
+      setEvents(json.events);
+    } catch (err) {
+      console.log(err.message);
+    }
+  };
+
+  // const purachaseReward = async (rewardID, setRewards) => {
+  //   const userToken = await AsyncStorage.getItem("userToken");
+  //   try {
+  //     const res = await fetch(`${API_PATH}/user/reward`, {
+  //       method: "POST",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //         "x-auth-token": userToken,
+  //       },
+  //       body: JSON.stringify({ rewardID }),
+  //     });
+  //     if (!res.ok) {
+  //       throw Error("Trouble unsubscribing from event");
+  //     }
+  //     const json = await res.json();
+  //     setRewards(json.rewards);
+  //   } catch (err) {
+  //     console.log(err.message);
+  //   }
+  // };
+
   useEffect(() => {
     const getUser = async () => {
       const userToken = await AsyncStorage.getItem("userToken");
@@ -36,7 +99,14 @@ export const useUser = () => {
     getUser();
   });
 
-  return { user, setUser, isSubscriber };
+  return {
+    user,
+    setUser,
+    isSubscriber,
+    subscribeToEvent,
+    unsubscribeFromEvent,
+    // purachaseReward,
+  };
 };
 
 export const useUserEvents = () => {
