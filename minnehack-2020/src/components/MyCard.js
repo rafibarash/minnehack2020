@@ -10,22 +10,32 @@ const styles = StyleSheet.create({
     marginBottom: 0,
   },
   imageStyle: {
-    width: 100,
+    width: 110,
     height: 75,
     marginBottom: 10,
+    borderRadius: 7,
   },
   viewStyle: {
     justifyContent: "center",
     alignItems: "center",
   },
+  cardStyle: {
+    width: 200,
+    height: 250,
+    borderRadius: 7,
+    marginLeft: 10,
+    marginRight: 10,
+    marginBottom: 10,
+  },
 });
 
 const MyCard = ({ item, subscribe, unsubscribe }) => {
+  var name;
+  item.name.length > 20 ? name = item.name.slice(0, 17)+'...' : name = item.name;
   return (
-    <Card
-      title={item.name}
-      // image={item.image}
-      // image={require('../images/pic2.jpg')}>
+    <Card 
+      title={name}
+      containerStyle={styles.cardStyle}
     >
       <View style={styles.viewStyle}>
         <Image source={{ uri: item.image }} style={styles.imageStyle} />
