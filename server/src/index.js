@@ -20,7 +20,6 @@ app.use(express.json({ extended: false }));
 // Routes
 app.get('/', (req, res) => res.send('API running'));
 app.use('/users', userRouter);
-app.use('/profile', profileRouter);
 app.use('/auth', authRouter);
 
 app.listen(PORT, () =>
