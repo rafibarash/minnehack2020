@@ -2,7 +2,6 @@ import React from "react";
 import { createAppContainer, createSwitchNavigator } from "react-navigation";
 import { createStackNavigator } from "react-navigation-stack";
 import { createBottomTabNavigator } from "react-navigation-tabs";
-import { Provider as AuthProvider } from "./src/context/AuthContext";
 import AuthLoadingScreen from "./src/screens/AuthLoadingScreen";
 import SigninScreen from "./src/screens/SigninScreen";
 import SignupScreen from "./src/screens/SignupScreen";
@@ -16,6 +15,7 @@ const AppStack = createBottomTabNavigator({
   GetPoints: GetPointsScreen,
   Account: AccountScreen
 });
+
 const AuthStack = createStackNavigator({
   SignIn: SigninScreen,
   SignUp: SignupScreen,
@@ -37,9 +37,7 @@ const App = createAppContainer(switchNavigator);
 export default () => {
   return (
     <>
-      {/* <AuthProvider> */}
       <App />
-      {/* </AuthProvider> */}
     </>
   );
 };

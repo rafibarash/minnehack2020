@@ -1,6 +1,5 @@
-import React, { useContext } from "react";
+import React from "react";
 import { Text, View, StyleSheet } from "react-native";
-import { Context as AuthContext } from "../context/AuthContext";
 
 const AccountScreen = () => {
   return (
