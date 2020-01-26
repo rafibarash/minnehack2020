@@ -3,6 +3,7 @@ import mongoose, { Schema } from 'mongoose';
 const OrganizationSchema = new mongoose.Schema({
   name: {
     type: String,
+    unique: true,
     required: true,
   },
   email: {
@@ -16,14 +17,10 @@ const OrganizationSchema = new mongoose.Schema({
     required: true,
     unique: true,
   },
-  admins: [
-      {
-          user:{
-              type: Schema.Types.ObjectId,
-              ref: 'User'
-          }
-      }
-  ],
+  admins: {
+    type: Schema.Types.ObjectId,
+    ref: 'User'
+  },
   events: [
     {
       event: {

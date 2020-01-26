@@ -6,6 +6,9 @@ import {
   badRequestError,
   validationError,
 } from '../utils/responseHelper';
+import { ResumeToken } from 'mongodb';
+import Organization from '../models/Organization';
+import User from '../models/User';
 
 const router = express.Router();
 
@@ -14,14 +17,28 @@ const router = express.Router();
  * @desc   Get all organizations
  * @access Public
  */
-router.get('/', authMiddleware, async (req, res) => {
+router.get('/', async (req, res) => {
   try {
-    return res.send('Implement me!');
+    Organization.find({}, function(err, organizations) {
+      return res.json(organizations);
+    })
+    
   } catch (err) {
     console.error(err.message);
     return internalError(res);
   }
 });
+
+router.get('/:id', async(req, res) => {
+  try{
+    Organization.findById(req.params.id , (err, organization)=> {
+      return res.json(organization);
+    })
+  } catch (err) {
+    console.error(err.message);
+    return internalError(res);
+  }
+})
 
 /**
  * @route  Post /organization
@@ -30,19 +47,37 @@ router.get('/', authMiddleware, async (req, res) => {
  */
 router.post(
   '/',
-  // TODO: Add checks?
-  // [
-  //   check('email', 'Please include a valid email.').isEmail(),
-  //   check('password', 'Please is required.').exists(),
-  // ],
+  [
+    check('email', 'Please include a valid email.').isEmail(),
+    check('phone', 'Phone number required.').not(),
+    check('name', 'Name required.').not()
+  ],
   async (req, res) => {
-    // const errors = validationResult(req);
-    // if (!errors.isEmpty()) {
-    //   return validationError(res, errors);
-    // }
-    // const { email, password } = req.body;
+     const errors = validationResult(req);
+     if (!errors.isEmpty()) {
+       return validationError(res, errors);
+     }
+     const { email, name, phone } = req.body;
     try {
-      return res.send('Implement me!');
+      let org = await Organization.findOne({ phoneNumber });
+
+      if (org) {
+        // organization already exists
+        return badRequestError(res, 'Organization already exsits.')
+      }
+      let user = await User.findById(req.user.id).select('-password');
+      const admin = user.id;
+
+
+
+      org = new Organization ({
+        name,
+        email,
+        admin,
+        phone
+      });
+      await org.save();
+      return res.json(org);
     } catch (err) {
       console.error(err.message);
       return internalError(res);
@@ -55,30 +90,30 @@ router.post(
  * @desc   Delete an organization
  * @access Private
  */
-router.delete('/', authMiddleware, async (req, res) => {
+
+router.delete('/:id', authMiddleware, async (req, res) => {
   try {
-    return res.send('Implement me!');
+    const user = await User.findById(req.user.id).select('-password');
+
+    Organization.findById(req.params.id , (err, organization)=> {
+      if (organization.admin == user.id){
+        Organization.deleteOne()
+      }
+    // Check if user is admin
+    
+    
+    
+
+
+
+    
+    
   } catch (err) {
     console.error(err.message);
     return internalError(res);
   }
 });
 
-/**
- * @route  GET /organization/:orgID
- * @desc   Get organization by org id
- * @access Public
- */
-router.get('/organization/:orgID', async (req, res) => {
-  try {
-    return res.send('Implement me!');
-  } catch (err) {
-    console.error(err.message);
-    if (err.kind === 'ObjectId') {
-      return badRequestError(res, 'Organization not found.');
-    }
-    return internalError(res);
-  }
-});
+
 
 export default router;
