@@ -1,34 +1,41 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { View, StyleSheet } from "react-native";
 import { Text, Divider } from "react-native-elements";
 import Container from "../components/Container";
 import { usePoints } from "../hooks/points";
+import AnimateNumber from 'react-native-countup'
+
 
 const PointsScreen = () => {
   const points = usePoints();
   const curTime = 0;
   const curPoints = 0;
+
+
+
+
   return (
     <Container>
       <View style={styles.pointsView}>
-        <Text h2 style={styles.header}>
-          Current Points
+        <Text h3 style={styles.header}>
+          Your Point Total
         </Text>
-        <Text h4>{points}</Text>
+        <Text h1 style={styles.header}>{points}</Text>
       </View>
-      <Divider />
       <View style={styles.accumPointsView}>
-        <Text h3 style={styles.curSession}>
+        <Text h4 style={styles.curSession}>
           Current session
         </Text>
         <View style={styles.sGrid}>
           <View style={styles.sGridChild}>
-            <Text h4>Time</Text>
-            <Text h4>{curTime}</Text>
+            <Text h4 style={styles.sGridText}>Time</Text>
+            <Text h5 style={styles.sGridText}>
+              <AnimateNumber value={10000} interval={15} countBy={1}/>
+            </Text>
           </View>
           <View style={styles.sGridChild}>
-            <Text h4>Points</Text>
-            <Text h4>{curPoints}</Text>
+            <Text h4 style={styles.sGridText}>Points</Text>
+            <Text h5 style={styles.sGridText}>{curPoints}</Text>
           </View>
         </View>
       </View>
@@ -38,28 +45,65 @@ const PointsScreen = () => {
 
 const styles = StyleSheet.create({
   pointsView: {
+    justifyContent: "center",
     alignItems: "center",
-    marginTop: 60,
     flex: 1,
+    borderRadius: 200,
+    borderWidth: 10,
+    borderColor: "#1e90ff",
   },
   header: {
-    paddingBottom: 20,
+    paddingLeft: 10,
+    paddingRight: 10,
+    marginBottom:10,
+    marginTop:10,
+    borderRadius: 30,
+    backgroundColor: "#1e90ff",
+    color: "#ffffff",
   },
   accumPointsView: {
+    justifyContent: "center",
     alignItems: "center",
-    flex: 1.5,
-    paddingVertical: 70,
+    marginTop: 60,
+    flex: 0.5,
+    borderRadius: 100,
+    borderWidth: 10,
+    borderColor: "#d11d0d",
   },
   curSession: {
-    color: "red",
+    paddingLeft: 10,
+    paddingRight: 10,
+    paddingBottom: 10,
+    paddingTop: 10,
+    marginBottom:10,
+    borderRadius: 30,
+    color: "#ffffff",
+    backgroundColor: "#d11d0d",
+
   },
   sGrid: {
     flexDirection: "row",
     textAlign: "center",
+    justifyContent: "space-around",
+
   },
   sGridChild: {
+    paddingLeft: 10,
+    paddingRight: 10,
+    paddingBottom: 10,
+    paddingTop: 10,
+    marginBottom:10,
+    borderRadius: 30,
+    backgroundColor: "#d11d0d",
+    flexDirection: "column",
     alignItems: "center",
+    marginLeft:20,
+    marginRight:20,
   },
+  sGridText: {
+    color: "#ffffff",
+
+  }
 });
 
 export default PointsScreen;
