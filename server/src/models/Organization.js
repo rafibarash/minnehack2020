@@ -1,6 +1,6 @@
 import mongoose, { Schema } from 'mongoose';
 
-const UserSchema = new mongoose.Schema({
+const OrganizationSchema = new mongoose.Schema({
   name: {
     type: String,
     required: true,
@@ -10,23 +10,20 @@ const UserSchema = new mongoose.Schema({
     required: true,
     unique: true,
   },
-  password: {
+
+  phone: {
     type: String,
     required: true,
+    unique: true,
   },
-  numPoints:{
-    type: Number,
-    default: 0
-  },
-  rewards: [
-    {
-      reward: {
-        type: Schema.Types.ObjectId,
-        ref: 'Reward'
+  admins: [
+      {
+          user:{
+              type: Schema.Types.ObjectId,
+              ref: 'User'
+          }
       }
-    }
   ],
-
   events: [
     {
       event: {
@@ -35,11 +32,8 @@ const UserSchema = new mongoose.Schema({
       }
     }
   ]
-
-  
-
 });
 
-const User = mongoose.model('User', UserSchema);
+const Organization = mongoose.model('organization', OrganizationSchema);
 
-export default User;
+export default Organization;
