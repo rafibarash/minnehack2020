@@ -9,15 +9,23 @@ const EventSchema = new mongoose.Schema({
     type: Schema.Types.ObjectId,
     ref: 'Organization',
   },
-  time: {
-    startTime: Date,
-    endTime: Date,
+  hostingAdmin: {
+      type: Schema.Types.ObjectId,
+      ref: 'User'
+  },
+  startTime: {
+    type: Date,
+    required: true
+  },
+  endTime: {
+      type: Date,
+      required: true
   },
   location: {
     type: { type: String, default: 'Point' },
     coordinates: { type: [Number], default: [0, 0] },
   },
-  keywords: {
+  tags: {
     type: [String],
   },
 });

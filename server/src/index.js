@@ -5,6 +5,7 @@ import connectDB from './utils/db';
 import userRouter from './routes/user';
 import authRouter from './routes/auth';
 import organizationRouter from './routes/organization';
+import eventRouter from './routes/event';
 import rewardRouter from './routes/reward';
 
 // Init App
@@ -22,6 +23,7 @@ app.use(express.json({ extended: false }));
 app.get('/', (req, res) => res.send('API running'));
 app.use('/user', userRouter);
 app.use('/auth', authRouter);
+app.use('/event', eventRouter);
 app.use('/organization', organizationRouter);
 app.use('/reward', rewardRouter);
 

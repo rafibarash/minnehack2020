@@ -195,7 +195,7 @@ router.put(
 
       // Add event ref to user
       user.events.push(event);
-
+      
       // Save user obj
       await user.save();
 
