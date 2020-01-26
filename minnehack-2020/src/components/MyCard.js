@@ -1,6 +1,7 @@
 import React from "react";
 import { StyleSheet, Image, View } from "react-native";
-import { Text, Card, Button, Icon } from "react-native-elements";
+import { Text, Card, Button } from "react-native-elements";
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 const styles = StyleSheet.create({
   buttonStyle: {
@@ -10,8 +11,8 @@ const styles = StyleSheet.create({
     marginBottom: 0,
   },
   imageStyle: {
-    width: 110,
-    height: 75,
+    width: 150,
+    height: 100,
     marginBottom: 10,
     borderRadius: 7,
   },
@@ -31,6 +32,7 @@ const styles = StyleSheet.create({
 
 const MyCard = ({ item, onSubscribe, onUnsubscribe }) => {
   var name;
+  var isLiked = false;
   item.name.length > 20
     ? (name = item.name.slice(0, 17) + "...")
     : (name = item.name);
@@ -38,11 +40,20 @@ const MyCard = ({ item, onSubscribe, onUnsubscribe }) => {
     <Card title={name} containerStyle={styles.cardStyle}>
       <View style={styles.viewStyle}>
         <Image source={{ uri: item.image }} style={styles.imageStyle} />
-        <Button
+        {isLiked
+          ? <Button
           style={styles.buttonStyle}
           icon={<Icon name="code" color="#ffffff" />}
-          title="VIEW NOW"
+          title="Like"
         />
+          : <Button
+          style={styles.buttonStyle}
+          icon={<Icon name="code" color="#ffffff" />}
+          title="Dislike"
+        />
+          }
+        
+        
       </View>
     </Card>
   );
