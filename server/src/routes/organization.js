@@ -47,6 +47,7 @@ router.get('/:id', async(req, res) => {
  */
 router.post(
   '/',
+  authMiddleware,
   [
     check('email', 'Please include a valid email.').isEmail(),
     check('phone', 'Phone number required.').not(),
@@ -59,7 +60,7 @@ router.post(
      }
      const { email, name, phone } = req.body;
     try {
-      let org = await Organization.findOne({ phoneNumber });
+      let org = await Organization.findOne({ phone });
 
       if (org) {
         // organization already exists
@@ -93,21 +94,16 @@ router.post(
 
 router.delete('/:id', authMiddleware, async (req, res) => {
   try {
-    const user = await User.findById(req.user.id).select('-password');
-
+    
     Organization.findById(req.params.id , (err, organization)=> {
-      if (organization.admin == user.id){
-        Organization.deleteOne()
+      if (organization.admin == req.user.id){
+        Organization.findOneAndRemove({_id: req.params.id});
+        return res.json({msg: 'Organization deleted.'});
+      } else {
+        return res.json({msg: 'Could not delete organization. You are not authorized.'});
       }
-    // Check if user is admin
-    
-    
-    
-
-
-
-    
-    
+    });
+      
   } catch (err) {
     console.error(err.message);
     return internalError(res);
