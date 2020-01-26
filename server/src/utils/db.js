@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+import mongoose, { Schema } from 'mongoose';
 import dotenv from 'dotenv';
 
 dotenv.config();
@@ -10,7 +10,6 @@ const options = {
   useUnifiedTopology: true,
   useCreateIndex: true,
 };
-
 
 const connectDB = async () => {
   try {
