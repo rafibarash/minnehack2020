@@ -7,7 +7,7 @@ import NavLink from "../components/NavLink";
 const SignupScreen = ({ navigation }) => {
   const [errorMessage, setErrorMessage] = useState("");
 
-  const signUp = async () => {
+  const signUp = async ({ email, password }) => {
     await AsyncStorage.setItem("userToken", "abc");
     navigation.navigate("Home");
   };

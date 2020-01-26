@@ -3,13 +3,24 @@ import { View, StyleSheet, Text, Button, AsyncStorage } from "react-native";
 import { NavigationEvents } from "react-navigation";
 import AuthForm from "../components/AuthForm";
 import NavLink from "../components/NavLink";
+import { API_PATH } from "../api";
 
 const SigninScreen = ({ navigation }) => {
   const [errorMessage, setErrorMessage] = useState("");
 
-  const signIn = async () => {
-    await AsyncStorage.setItem("userToken", "abc");
-    navigation.navigate("App");
+  const signIn = async ({ email, password }) => {
+    const res = await fetch(`${API_PATH}/auth`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, password }),
+    });
+    if (!res.ok) {
+      setErrorMessage("Bad login.");
+    } else {
+      const json = await res.json();
+      await AsyncStorage.setItem("userToken", json.token);
+      navigation.navigate("App");
+    }
   };
 
   return (
