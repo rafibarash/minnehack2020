@@ -5,30 +5,38 @@ const OrganizationSchema = new mongoose.Schema({
     type: String,
     unique: true,
     required: true,
+    unique: true,
   },
   email: {
     type: String,
     required: true,
     unique: true,
   },
-
   phone: {
     type: String,
     required: true,
     unique: true,
   },
-  admins: {
+  admin: {
     type: Schema.Types.ObjectId,
     ref: 'User'
   },
+  members: [
+    {
+      user: {
+        type: Schema.Types.ObjectId,
+        ref: 'User',
+      },
+    },
+  ],
   events: [
     {
       event: {
         type: Schema.Types.ObjectId,
-        ref: 'Event'
-      }
-    }
-  ]
+        ref: 'Event',
+      },
+    },
+  ],
 });
 
 const Organization = mongoose.model('organization', OrganizationSchema);

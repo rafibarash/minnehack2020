@@ -5,22 +5,21 @@ const EventSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  hostingOrg:{
-      type: Schema.Types.ObjectId,
-      ref: 'Organization'
+  hostingOrg: {
+    type: Schema.Types.ObjectId,
+    ref: 'Organization',
   },
-  
   time: {
     startTime: Date,
-    endTime: Date
+    endTime: Date,
   },
   location: {
-    type: {type: String, default: 'Point'},
-    coordinates: {type: [Number], default: [0, 0]}
+    type: { type: String, default: 'Point' },
+    coordinates: { type: [Number], default: [0, 0] },
   },
-  keywords:{
-    type: [String]
-  }
+  keywords: {
+    type: [String],
+  },
 });
 
 const Event = mongoose.model('event', EventSchema);
