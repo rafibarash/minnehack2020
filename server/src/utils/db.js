@@ -11,6 +11,7 @@ const options = {
   useCreateIndex: true,
 };
 
+
 const connectDB = async () => {
   try {
     await mongoose.connect(db, options);
