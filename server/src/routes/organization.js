@@ -40,6 +40,7 @@ router.get('/:id', async(req, res) => {
   }
 })
 
+
 /**
  * @route  Post /organization
  * @desc   Create an organization
@@ -68,7 +69,6 @@ router.post(
       }
       let user = await User.findById(req.user.id).select('-password');
       const admin = user.id;
-
 
 
       org = new Organization ({
