@@ -19,7 +19,7 @@ connectDB();
 app.use(express.json({ extended: false }));
 
 // Routes
-app.get('/', (req, res) => res.send('API running'));
+app.get('/', (req, res) => res.json({ msg: 'API running' }));
 app.use('/user', userRouter);
 app.use('/auth', authRouter);
 app.use('/organization', organizationRouter);

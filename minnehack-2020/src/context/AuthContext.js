@@ -1,6 +1,7 @@
 import { AsyncStorage } from "react-native";
 import createDataContext from "./createDataContext";
 import { navigate } from "../navigationRef";
+import { API_PATH } from "../api";
 
 const authReducer = (state, action) => {
   switch (action.type) {
@@ -34,7 +35,7 @@ const clearErrorMessage = dispatch => () => {
 const signup = dispatch => async ({ email, password }) => {
   console.log(email, password);
   try {
-    const res = await fetch("http://localhost:8080/user", {
+    const res = await fetch(`${API_PATH}/user`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -60,7 +61,7 @@ const signup = dispatch => async ({ email, password }) => {
 
 const signin = dispatch => async ({ email, password }) => {
   try {
-    const res = await fetch("http://localhost:8080/auth", {
+    const res = await fetch(`${API_PATH}/auth`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({

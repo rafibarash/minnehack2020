@@ -35,11 +35,11 @@ import ResolveAuthScreen from "./src/screens/ResolveAuthScreen";
 // }
 
 const switchNavigator = createSwitchNavigator({
-  ResolveAuth: ResolveAuthScreen,
-  loginFlow: createStackNavigator({
-    Signup: SignupScreen,
-    Signin: SigninScreen,
-  }),
+  // ResolveAuth: ResolveAuthScreen,
+  // loginFlow: createStackNavigator({
+  //   Signup: SignupScreen,
+  //   Signin: SigninScreen,
+  // }),
   mainFlow: createBottomTabNavigator({
     Home: HomeScreen,
     // Settings: SettingsScreen,
@@ -51,12 +51,14 @@ const App = createAppContainer(switchNavigator);
 
 export default () => {
   return (
-    <AuthProvider>
+    <>
+      {/* <AuthProvider> */}
       <App
         ref={navigator => {
           setNavigator(navigator);
         }}
       />
-    </AuthProvider>
+      {/* </AuthProvider> */}
+    </>
   );
 };

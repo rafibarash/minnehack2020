@@ -1,10 +1,22 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Text, View, StyleSheet } from "react-native";
+import { API_PATH } from "../api";
 
 const HomeScreen = () => {
+  const [msg, setMsg] = useState("Hello world!");
+  useEffect(() => {
+    const sayHi = async () => {
+      const res = await fetch(`${API_PATH}`);
+      console.log(res);
+      const json = await res.json();
+      console.log(json.msg);
+      setMsg(json.msg);
+    };
+    sayHi();
+  });
   return (
     <View style={styles.root}>
-      <Text style={styles.text}>Hello world!</Text>
+      <Text style={styles.text}>{msg}</Text>
     </View>
   );
 };
