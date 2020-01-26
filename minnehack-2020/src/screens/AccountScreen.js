@@ -4,28 +4,29 @@ import { Text, Button, ListItem } from "react-native-elements";
 import Container from "../components/Container";
 
 const AccountScreen = ({ navigation }) => {
+  const signOut = async () => {
+    await AsyncStorage.clear();
+    navigation.navigate("Auth");
+  };
+
   return (
     <View style={styles.root}>
       <Text h2 style={styles.header}>
         My Account
       </Text>
-      <Actions />
-    </View>
-  );
-};
-
-const signOut = async () => {
-  await AsyncStorage.clear();
-  navigation.navigate("Auth");
-};
-
-const Actions = () => {
-  return (
-    <View style={styles.actions}>
-      <ListItem title="Sign out" onPress={signOut} topDivider bottomDivider />
-      <ListItem title="Action two" bottomDivider />
-      <ListItem title="Action three" bottomDivider />
-      {/* <Button title="Sign out" onPress={signOut} type="clear" /> */}
+      <View style={styles.actions}>
+        <ListItem title="Sign out" onPress={signOut} topDivider bottomDivider />
+        <ListItem
+          title="Action two"
+          onPress={() => alert("action two!!")}
+          bottomDivider
+        />
+        <ListItem
+          title="Action three"
+          onPress={() => alert("action threeeee")}
+          bottomDivider
+        />
+      </View>
     </View>
   );
 };

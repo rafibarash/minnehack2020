@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
 import { AsyncStorage } from "react-native";
 import { API_PATH } from "../api";
-import Radar from "react-native-radar";
 
 export const usePoints = () => {
   const [points, setPoints] = useState(null);
+  const [isInLocation, setIsInLocation] = useState(true);
 
   useEffect(() => {
     const getPoints = async () => {
@@ -27,38 +27,13 @@ export const usePoints = () => {
       }
     };
     getPoints();
-  });
+  }, []);
 
   useEffect(() => {
-    const trackUser = async () => {
-      // identify the user and request permissions
-      Radar.setUserId(this.state.userId);
-      Radar.requestPermissions(true);
-
-      // track the user's location once in the foreground
-      const result = await Radar.trackOnce();
-      console.log(result);
-
-      // start tracking the user's location in the background
-      Radar.startTracking();
-    };
-    trackUser();
-  });
+    setInterval(() => {
+      setPoints(prevPoints => prevPoints + 1);
+    }, 1000);
+  }, [isInLocation]);
 
   return points;
 };
-
-// receive events
-Radar.on("events", result => {
-  // do something with result.events, result.user
-});
-
-// receive location updates
-Radar.on("location", result => {
-  // do something with result.location, result.user
-});
-
-// receive errors
-Radar.on("error", err => {
-  // do something with err
-});
