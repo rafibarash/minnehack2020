@@ -7,11 +7,14 @@ import AuthLoadingScreen from "./src/screens/AuthLoadingScreen";
 import SigninScreen from "./src/screens/SigninScreen";
 import SignupScreen from "./src/screens/SignupScreen";
 import HomeScreen from "./src/screens/HomeScreen";
+
 import AccountScreen from "./src/screens/AccountScreen";
+import GetPointsScreen from "./src/screens/GetPointsScreen";
 
 const AppStack = createBottomTabNavigator({
   Home: HomeScreen,
-  Account: AccountScreen,
+  GetPoints: GetPointsScreen,
+  Account: AccountScreen
 });
 const AuthStack = createStackNavigator({
   SignIn: SigninScreen,
