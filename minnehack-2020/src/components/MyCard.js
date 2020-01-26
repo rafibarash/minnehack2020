@@ -20,7 +20,7 @@ const styles = StyleSheet.create({
   },
 });
 
-const MyCard = ({ item, subscribe, unsubscribe }) => {
+const MyCard = ({ item, onSubscribe, onUnsubscribe }) => {
   return (
     <Card
       title={item.name}
