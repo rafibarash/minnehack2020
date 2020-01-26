@@ -15,7 +15,7 @@ const SigninScreen = ({ navigation }) => {
       body: JSON.stringify({ email, password }),
     });
     if (!res.ok) {
-      setErrorMessage("Bad login.");
+      setErrorMessage("Invalid login.");
     } else {
       const json = await res.json();
       await AsyncStorage.setItem("userToken", json.token);
