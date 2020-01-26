@@ -1,21 +1,28 @@
-import React, { useContext } from "react";
-import { View, StyleSheet } from "react-native";
+import React, { useState } from "react";
+import { View, StyleSheet, AsyncStorage } from "react-native";
 import { NavigationEvents } from "react-navigation";
 import AuthForm from "../components/AuthForm";
 import NavLink from "../components/NavLink";
 
 const SignupScreen = ({ navigation }) => {
+  const [errorMessage, setErrorMessage] = useState("");
+
+  const signUp = async () => {
+    await AsyncStorage.setItem("userToken", "abc");
+    navigation.navigate("Home");
+  };
+
   return (
     <View style={styles.container}>
-      <NavigationEvents onWillBlur={clearErrorMessage} />
+      <NavigationEvents onWillBlur={() => setErrorMessage("")} />
       <AuthForm
         headerText="Sign Up for Tracker"
-        errorMessage={state.errorMessage}
+        errorMessage={errorMessage}
         submitButtonText="Sign Up"
-        onSubmit={signup}
+        onSubmit={signUp}
       />
       <NavLink
-        routeName="Signin"
+        routeName="SignIn"
         text="Already have an account? Sign in instead!"
       />
     </View>
