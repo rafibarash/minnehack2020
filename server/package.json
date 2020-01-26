@@ -1,0 +1,38 @@
+{
+  "name": "minnehack2020-server",
+  "version": "1.0.0",
+  "description": "### Prompt",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "yarn server",
+    "server": "nodemon --exec babel-node src/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rafibarash/minnehack2020.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rafibarash/minnehack2020/issues"
+  },
+  "homepage": "https://github.com/rafibarash/minnehack2020#readme",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "express-validator": "^6.3.1",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.8.9"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.8.3",
+    "@babel/node": "^7.8.3",
+    "@babel/plugin-proposal-class-properties": "^7.8.3",
+    "@babel/preset-env": "^7.8.3",
+    "nodemon": "^2.0.2",
+    "prettier": "^1.19.1"
+  }
+}
