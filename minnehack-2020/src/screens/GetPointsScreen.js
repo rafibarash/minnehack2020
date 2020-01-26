@@ -1,12 +1,34 @@
 import React, { useContext } from "react";
-import { Text, View, StyleSheet } from "react-native";
+import { StyleSheet,
+    Button,
+    View,
+    SafeAreaView,
+    Text,
+    Alert } from "react-native";
+import AwesomeButton from "react-native-really-awesome-button"
 import { Context as AuthContext } from "../context/AuthContext";
 
+
+function Separator() {
+    return <View style={styles.separator} />;
+  }
 const GetPointsScreen = () => {
   return (
-    <View style={styles.root}>
-      <Text>Getting Points</Text>
-    </View>
+    <SafeAreaView style={styles.container}>
+      <View>
+      <AwesomeButton style={styles.}
+      progress
+      onPress={next => {
+        /** Do Something **/
+        next();
+      }}
+    >
+      Begin Volunteering Tracking
+    </AwesomeButton>
+      </View>
+      
+
+    </SafeAreaView>
   );
 };
 
